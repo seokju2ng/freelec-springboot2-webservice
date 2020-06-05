@@ -10,15 +10,15 @@ import java.util.Map;
 @Getter
 public class OAuthAttributes {
     private Map<String, Object> attributes;
-    private String nameAttributesKey;
+    private String nameAttributeKey;
     private String name;
     private String email;
     private String picture;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributesKey, String name, String email, String picture) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {
         this.attributes = attributes;
-        this.nameAttributesKey = nameAttributesKey;
+        this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.picture = picture;
@@ -35,7 +35,7 @@ public class OAuthAttributes {
                 .email((String)attributes.get("email"))
                 .picture((String)attributes.get("picture"))
                 .attributes(attributes)
-                .nameAttributesKey(userNameAttributeName)
+                .nameAttributeKey(userNameAttributeName)
                 .build();
     }
 
