@@ -1,5 +1,6 @@
 package com.jojoldu.book.springboot.web;
 
+import com.jojoldu.book.springboot.config.auth.LoginUser;
 import com.jojoldu.book.springboot.config.auth.dto.SessionUser;
 import com.jojoldu.book.springboot.service.posts.PostsService;
 import com.jojoldu.book.springboot.web.dto.PostsResponseDto;
@@ -19,11 +20,9 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) { // 이제 어느 컨트롤러든지 @LoginUser만 사용하면 세션 정보를 가져올 수 있게 되었다
         model.addAttribute("posts", postsService.findAllDesc());
-        SessionUser user = (SessionUser)httpSession.getAttribute("user");
-            // 앞서 작성된 CustomOAuth2UserService에서 로그인 성공시 세션에 SessionUser를 저장하도록 구성
-            // 즉, 로그인 성공 시 httpSession.getAttribute("user")에서 값을 가져올 수 있다
+
         if (user != null) { // 세션에 저장된 값이 있을 때만 model에 userName 등록
             model.addAttribute("userName", user.getName());
         }

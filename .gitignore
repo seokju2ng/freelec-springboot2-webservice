@@ -3,3 +3,5 @@
 .gradle
 .idea
 application-oauth.properties
+out/production/classes/generated/
+out/test/classes/generated_tests/
