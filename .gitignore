@@ -4,5 +4,6 @@
 .idea
 out/*
 build/*
+info
 application-oauth.properties
 freelec-springboot-webservice.pem
