@@ -2,6 +2,7 @@
 
 .gradle
 .idea
+out/*
+build/*
 application-oauth.properties
-out/production/classes/generated/
-out/test/classes/generated_tests/
+freelec-springboot-webservice.pem
