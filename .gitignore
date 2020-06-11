@@ -7,3 +7,4 @@ build/*
 info
 application-oauth.properties
 freelec-springboot-webservice.pem
+application-real-db.properties
