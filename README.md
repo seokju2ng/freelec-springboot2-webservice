@@ -5,3 +5,6 @@
 예제 따라하는 프로젝트 레파지토리
 
 [바로가기](https://github.com/jojoldu/freelec-springboot2-webservice)
+
+<br>
+2020.06.11 종료
