@@ -3,7 +3,7 @@ jdk:
   - openjdk8
 
 # Travis CI를 어느 브랜치가 푸시될 때 수행할지 지정
-# 현재 옵션은 오직 master 브랜치에 push될 때만 수행
+# 현재 옵션은 오직 master 브랜치에 push 될 때만 수행
 branches:
   only:
     - master
@@ -17,8 +17,27 @@ cache:
     - '$HOME/.gradle'
 
 # master 브랜치에 푸시되었을 때 수행하는 명령어
-# 여기서는 프로젝트 내부에 둔 gradlew을 통해 clean & build를 수행
+# 여기서는 프로젝트 내부에 둔 gradlew 을 통해 clean & build를 수행
 script: "./gradlew clean build"
+
+# deploy 명령어가 실행되기 전에 수행
+# CodeDeploy 는 Jar 파일은 인식하지 못하므로 Jar+기타 설정 파일들을 모아 압축(zip)
+before_deploy:
+  - zip -r freelec-springboot2-webservice *
+  - mkdir -p deploy
+  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
+
+# S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비스와 연동될 행위들을 선언
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
+    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
+    bucket: freelec-springboot2-build-ksj # S3 버킷
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private # zip 파일 접근을 private으로
+    local_dir: deploy # before_deploy에서 생성한 디렉토리 # 해당 위치의 파일들만 S3로 전송
+    wait-until-deployed: true
 
 # CI 실행 완료 시 메일로 알람
 #  Traivs CI 실행 완료 시 자동으로 알람이 가도록 설정
@@ -26,3 +45,4 @@ notifications:
   email:
     recipients:
       - ehddnwnd@naver.com
+
